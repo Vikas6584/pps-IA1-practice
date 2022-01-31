@@ -16,129 +16,80 @@ For help, type "help".
 Type "apropos word" to search for commands related to "word"...
 Reading symbols from a.out...done.
 (gdb) b main
-Breakpoint 1 at 0xa1f: file p7original.c, line 49.
+Breakpoint 1 at 0x856: file p7original.c, line 38.
 (gdb) r
 Starting program: /home/runner/pps-IA1-practice/a.out 
 warning: Error disabling address space randomization: Operation not permitted
 
-Breakpoint 1, main () at p7original.c:49
-49  {
-(gdb) n
-50    printf("Start Of The Program:\n");
-(gdb) n
-Start Of The Program:
-51    int n = get_n();
+Breakpoint 1, main () at p7original.c:38
+38      c1 = input();
 (gdb) s
-get_n () at p7original.c:8
-8   int get_n(){
+input () at p7original.c:11
+11  {
 (gdb) n
-10    printf("Enter the number of complex numbers: ");
+13      printf("Enter the Real part: ");
 (gdb) n
-11    scanf("%d", &n);
+14      scanf("%f", &c.real);
 (gdb) n
-Enter the number of complex numbers: 2
-12    return n;
+Enter the Real part: 4
+15      printf("Enter the Imaginary part: ");
 (gdb) n
-13  }
-(gdb) p n
-$1 = 2
+16      scanf("%f", &c.imaginary);
 (gdb) n
-main () at p7original.c:52
-52    Complex c[n], res;
-(gdb) n
-53    input_n_complex(n, c);
-(gdb) s
-input_n_complex (n=2, c=0x7ffec4ebd230) at p7original.c:16
-16    for(int i=0; i<n; i++){
-(gdb) n
-17      printf("Enter the real part: ");
-(gdb) n
-18      scanf("%f", &c[i].real);
-(gdb) n
-Enter the real part: 3
-19      printf("Enter the imaginary part: ");
-(gdb) n
-20      scanf("%f", &c[i].imaginary);
-(gdb) n
-Enter the imaginary part: 7
-16    for(int i=0; i<n; i++){
-(gdb) p c[i].real
-$2 = 3
-(gdb) p c[i].imaginary
-$3 = 7
-(gdb) n
-17      printf("Enter the real part: ");
-(gdb) n
-18      scanf("%f", &c[i].real);
-(gdb) n
-Enter the real part: 6
-19      printf("Enter the imaginary part: ");
-(gdb) n
-20      scanf("%f", &c[i].imaginary);
-(gdb) n
-Enter the imaginary part: 9
-16    for(int i=0; i<n; i++){
-(gdb) p c[i].real
-$4 = 6
-(gdb) p c[i].imaginary
-$5 = 9
-(gdb) n
-22  }
-(gdb) n
-main () at p7original.c:54
-54    res = add_n_complex(n, c);
+Enter the Imaginary part: 7
+17      return c;
 (gdb) p c
-$6 = {{real = 3, imaginary = 7}, {real = 6, imaginary = 9}}
+$1 = {real = 4, imaginary = 7}
+(gdb) n
+18  }
+(gdb) n
+main () at p7original.c:39
+39      c2 = input();
 (gdb) s
-add_n_complex (n=2, c=0x7ffec4ebd230) at p7original.c:26
-26    res.real = 0;
+input () at p7original.c:11
+11  {
 (gdb) n
-27    res.imaginary = 0;
+13      printf("Enter the Real part: ");
 (gdb) n
-28    for(int i=0; i<n; i++){
+14      scanf("%f", &c.real);
 (gdb) n
-29      res.real += c[i].real; 
+Enter the Real part: 6
+15      printf("Enter the Imaginary part: ");
 (gdb) n
-30      res.imaginary += c[i].imaginary;
+16      scanf("%f", &c.imaginary);
 (gdb) n
-28    for(int i=0; i<n; i++){
+Enter the Imaginary part: 9
+17      return c;
+(gdb) p c
+$2 = {real = 6, imaginary = 9}
 (gdb) n
-29      res.real += c[i].real; 
+18  }
 (gdb) n
-30      res.imaginary += c[i].imaginary;
-(gdb) n
-28    for(int i=0; i<n; i++){
-(gdb) n
-32    return res;
-(gdb) p res
-$7 = {real = 9, imaginary = 16}
-(gdb) n
-33  }
-(gdb) n
-main () at p7original.c:55
-55    output(n, c, res);
+main () at p7original.c:40
+40      sum = add(c1, c2);
 (gdb) s
-output (n=2, c=0x7ffec4ebd230, result=...) at p7original.c:36
-36    if(n==1){
+add (a=..., b=...) at p7original.c:23
+23      sum.real = a.real + b.real;
 (gdb) n
-39        for(int i=0; i<n-1; i++){
+24      sum.imaginary = a.imaginary + b.imaginary;
 (gdb) n
-40          printf("%0.2f + %0.2fi\n", c[i].real, c[i].imaginary);
+25      return sum;
+(gdb) p sum
+$3 = {real = 10, imaginary = 16}
 (gdb) n
-3.00 + 7.00i
-39        for(int i=0; i<n-1; i++){
+26  }
 (gdb) n
-42        printf("+ %0.2f + %0.2fi is\n%0.2f + %0.2fi\n", c[n-1].real, c[n-1].imaginary, result.real, result.imaginary);
+main () at p7original.c:41
+41      output(c1, c2, sum);
+(gdb) s
+output (a=..., b=..., sum=...) at p7original.c:30
+30      printf("The sum of %0.1f + %0.1fi and %0.1f + %0.1fi is %0.1f + %0.1fi\n", a.real, a.imaginary, b.real, b.imaginary, sum.real, sum.imaginary);
 (gdb) n
-+ 6.00 + 9.00i is
-9.00 + 16.00i
-46  }
+The sum of 4.0 + 7.0i and 6.0 + 9.0i is 10.0 + 16.0i
+31  }
 (gdb) n
-main () at p7original.c:56
-56    printf("\nEnd Of Code: 🙏");
-(gdb) n
-
-58    return 0;
+main () at p7original.c:42
+42      return 0;
 (gdb) c
 Continuing.
-End Of Code: 🙏[Inferior 1 (process 1043) exited normally]
+[Inferior 1 (process 1157) exited normally]
